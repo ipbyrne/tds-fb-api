@@ -1,0 +1,411 @@
+<!--<button style="float:right;" onclick="specialPop.init(  );" >Add New Special</button>-->
+<button class="tdsBotton" style="float:right;" onclick="window.location = '/addspecial/<?php echo $row['id']; ?>';" >Add New Special</button>
+
+<h2>Currently Scheduled Specials</h2>
+<?php
+/*
+if(strlen($fbresult) > 1) {
+    echo 'Posted Special To Facebook.<br>';
+}
+
+echo '<pre>FB RESULTS: ';
+print_r($fbresult);
+echo '</pre><br>';
+*/
+?>
+
+
+<div id="specialList" >
+    <?php
+    //$specs = tdsRestaurant::getSpecials( $row['id'] );
+    //tdsHelper::displaySpecials( $specs, true );
+    tdsHelper::displaySpecials( $row['id'], true );
+    ?>
+    <div style="clear:both;"></div>
+</div>
+
+<br>
+
+<h2>Default Specials</h2>
+<div id="specialDefaultList" >
+    <?php
+    tdsHelper::displayDefaultSpecials( $row['id'] );
+    ?>
+    <div style="clear:both;"></div>
+</div>
+
+<br>
+<!--
+<button class="tdsBotton" onclick="aslg.create( );" >Generate Add Special Sign-in Link</button>
+<div class="table" id="eventList" >
+    <?php
+    ?><div class="tr" >
+        <div class="td tdToken" >Created By</div>
+        <div class="td tdToken" >Created On</div>
+        <div class="td tdToken" >Open Link</div>
+        <div class="td tdToken" >Delete</div>
+    </div><?php
+
+    foreach( tdsTokens::getRowsByRid( $row['id'] ) as $trow )
+    {
+        ?><div class="tr" >
+            <div class="td tdToken" ><?php echo tdsUser::getEmailById( $trow['uid'] ); ?></div>
+            <div class="td tdToken" ><?php echo $trow['created']; ?></div>
+            <div class="td tdToken" ><button class="tdsBotton" onclick="window.location = '/addspecial/<?php echo $trow['rid']; ?>/token/<?php echo $trow['token']; ?>';" >Open Link</button></div>
+            <div class="td tdToken" ><button class="tdsBotton" onclick="aslg.remove( <?php echo $trow['id'];?> );" >Delete</button></div>
+        </div><?php
+    }
+    ?>
+    <div style="clear:both;" ></div>
+</div>
+-->
+
+<div id="editSpecialImagePopup" style="display:none;" >
+    <h4>Want to change this image?</h4>
+    <form method="post" id="fileinfo6" name="fileinfo6" >
+        <div id="iText-6" >You can upload a new image.</div>
+        <input type="file" class="editSpecialImage" id="editSpecialUpload" name="file" required /><br>
+    </form>
+    <label for="editSpecialImageSelect" >Or select a previous one</label>
+    <select class="editSpecialImage" id="editSpecialImageSelect" >
+        <?php
+        tdsHelper::displayImages( $row['id'] );
+        ?>
+    </select>
+    <br>
+    <div id="editImageOutput" ></div>
+</div>
+
+<div id="newSpecialPopupContent" style="display:none;">
+    <table>
+        <tr>
+            <td>
+                <input type="radio" id="sPreselect3" name="sPreselect" value="0" checked>
+            </td>
+            <td><label for="sPreselect3" >Create A Completely New Special:</label></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="radio" id="sPreselect1" name="sPreselect" value="2" >
+            </td>
+            <td><label for="sPreselect1" >Create From An Existing Special:</label></td>
+            <td id="actualSelector2" style="display:none;" ><label for="specialLibrary1" ></label>
+                <select id="specialLibrary1" >
+                    <option>Choose one....</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="radio" id="sPreselect2" name="sPreselect" value="1" >
+            </td>
+            <td><label for="sPreselect2" >Create From TDS Library:</label></td>
+            <td id="actualSelector1" style="display:none;" ><label for="specialLibrary2" ></label>
+                <select id="specialLibrary2" >
+                    <option>Choose one....</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+
+    <br>
+
+    <table>
+        <tr id="actualSelector3" >
+            <td><label for="specName" >Special Name (max 30 chars):</label></td>
+            <td>
+                <!-- <input type="text" id="specName" size="40" maxlength="30" > -->
+                <textarea id="specName" cols="42" rows="1" ></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="specDesc" >Description :</label></td>
+            <td>
+                <textarea id="specDesc" cols="42" rows="4" ></textarea>
+            </td>
+        </tr>
+    </table>
+
+    <p>* Full description will appear on the restaurant page, but only the first XX characters will appear on the results page.</p>
+
+    <br>
+
+    <table>
+        <tr>
+            <td>
+                <input type="radio" id="pointless4" name="sType" value="1" >
+            </td>
+            <td><label for="pointless4" >Primary Special: (Overrides Default Specials)</label></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="radio" id="pointless5" name="sType" value="2" >
+            </td>
+            <td><label for="pointless5" >Secondary Special</label></td>
+        </tr>
+    </table>
+
+    <br>
+
+    <h4>Image</h4>
+    <table>
+        <tr>
+            <td>
+                <input type="radio" id="pointless1" name="sImage" value="0" >
+            </td>
+            <td><label for="pointless1" >Upload:</label></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="radio" id="pointless2" name="sImage" value="1" >
+            </td>
+            <td><label for="pointless2" >Use Existing</label></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="radio" id="pointless3" name="sImage" value="2" >
+            </td>
+            <td><label for="pointless3" >Use from TDS Library</label></td>
+        </tr>
+    </table>
+
+    <div id="specialImageUpload" style="display:none;" >
+        <form method="post" id="fileinfo5" name="fileinfo5" >
+            <div id="iText-5" >Image will begin to upload as soon as it is chosen.</div>
+            <input type="file" id="specialUpload" name="file" required /><br>
+            <input type="hidden" id="rName" name="rName" value="img/logo.png" >
+        </form>
+    </div>
+    <div id="specialImageReuse" style="display:none;" ><label for="specialImageReuseActual" ></label>
+        <select id="specialImageReuseActual" >
+            <?php
+                tdsHelper::displayImages( $row['id'] );
+            ?>
+        </select>
+    </div>
+    <div id="specialImageLibrary" style="display:none;" ><label for="specialImageLibraryActual" ></label>
+        <select id="specialImageLibraryActual" >
+            <?php
+            $images = scandir( 'data/specials/0/' );
+            if( count( $images ) > 2 )
+            {
+                foreach( $images as $i )
+                {
+                    if( $i != '.' && $i != '..' )
+                    {
+                        $path = 'data/specials/0/' . $i;
+                        echo '<option value="' . $path . '" >' . $i . '</option>';
+                    }
+                }
+            }
+            else
+            {
+                ?><option>None Currently Available</option><?php
+            }
+            ?>
+        </select>
+    </div>
+
+    <div style="clear:both;"></div>
+
+    <br>
+
+    <h4>Schedule to Run On / At / As</h4>
+    <table>
+        <tr>
+            <td>Select a day :</td>
+            <td colspan="2" ><input type="date" id="specialDate" ></td>
+            <td>Format: mm/dd/yyyy</td>
+        </tr>
+    </table>
+
+    <br>
+
+    <table>
+        <tr>
+            <td><input type="radio" id="alldaySpecial" name="timeframe" value="1" checked></td>
+            <td><label for="alldaySpecial" >All Day</label></td>
+            <td><input type="radio" id="selectSpecialTime" name="timeframe" value="0" ></td>
+            <td><label for="selectSpecialTime" >Select Time</label></td>
+        </tr>
+        <tr id="specialTime" style="display:none;" >
+            <td><label for="specialTime1" >From :</label></td>
+            <td colspan="2" >
+                <select id="specialTime1" >
+                    <?php tdsHelper::getTime( 9 ); ?>
+                </select> to
+                <select id="specialTime2" >
+                    <?php tdsHelper::getTime( 17 ); ?>
+                </select>
+            </td>
+        </tr>
+    </table>
+
+    <br>
+
+    <h4>Repeat this Event?</h4>
+    <table>
+        <tr>
+            <td><input type="checkbox" class="specRepeatBox" id="sSunday" ></td>
+            <td><label for="sSunday" >Sunday</label></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="specRepeatBox" id="sMonday" ></td>
+            <td><label for="sMonday" >Monday</label></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="specRepeatBox" id="sTuesday" ></td>
+            <td><label for="sTuesday" >Tuesday</label></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="specRepeatBox" id="sWednesday" ></td>
+            <td><label for="sWednesday" >Wednesday</label></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="specRepeatBox" id="sThursday" ></td>
+            <td><label for="sThursday" >Thursday</label></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="specRepeatBox" id="sFriday" ></td>
+            <td><label for="sFriday" >Friday</label></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" class="specRepeatBox" id="sSaturday" ></td>
+            <td><label for="sSaturday" >Saturday</label></td>
+        </tr>
+    </table>
+
+    <br>
+
+    <table>
+        <tr>
+            <td><label for="promoRequired" >Check to Require Promo Code :</label></td>
+            <td>
+                <input type="checkbox" id="promoRequired" >
+            </td>
+        </tr>
+    </table>
+
+    <br>
+
+    <h4>Check To Push This Special To:</h4>
+
+    <table>
+        <tr>
+            <td><label for="pushSpecialFacebook" >Facebook</label></td>
+            <td>
+                <input type="checkbox" id="pushSpecialFacebook" >
+                <?php
+                if($f = tdsFacebook::getCreds($row['id'])) {
+                    $fbSelId = $f['fbperms']['fbSelId'];
+                    $fbSelName = $f['fbperms']['fbSelName'];
+                    $fbExtToken = $f['fbperms']['fbExtToken'];
+                    //echo'<br>Inside Recall: Id: '.$fbSelId.' Name: '.$fbSelName.'<br>';
+                }
+                ?>
+
+            </td>
+            <td id="facebookSpecialMessage" ></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <!-- TODO: Figure out this FB ERROR. Why when not commented kills FB on manage. -->
+                <!--<script>
+                    FB.getLoginStatus(function(response) {
+                        setTimeout(function(){
+                        if (response.status === 'connected') {
+                            $('facebookSpecialMessage').addClass('success');
+                            document.getElementById('facebookSpecialMessage').innerHTML = '<span style="color:green;" >Facebook Ready</span>';
+                            $("#pushSpecialFacebook").removeAttr("disabled");
+                            $('#FbLogin').hide();
+                        } else if (response.status === 'not_authorized') {
+                            $('facebookSpecialMessage').addClass('error');
+                            document.getElementById('facebookSpecialMessage').innerHTML = '<span style="color:red;" >Please Setup Facebook Under Social Integration.</span>';
+                            //$("#pushSpecialFacebook").attr("disabled", true);
+                            $('#FbLogin').show();
+                        } else {
+                            $('facebookSpecialMessage').addClass('error');
+                            document.getElementById('facebookSpecialMessage').innerHTML = '<span style="color:red;" >Please Login.</span>';
+                            //$("#pushSpecialFacebook").attr("disabled", true);
+                            $('#FbLogin').show();
+                        }}, 2000);
+                    });
+
+                </script>-->
+                <div id="FbLogin" style="">
+                    <fb:login-button scope="public_profile,email,manage_pages,publish_actions" onlogin="checkLoginState(); FB.getLoginStatus(function(response);"></fb:login-button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="pushSpecialTwitter" >Twitter</label></td>
+            <td>
+                <input type="checkbox" id="pushSpecialTwitter" >
+            </td>
+            <td id="twitterSpecialMessage" ><?php echo $tConnMess; ?></td>
+        </tr>
+    </table>
+
+    <br>
+
+    <table>
+        <tr>
+            <td><button class="tdsBotton" id="specialCancel" >Cancel</button></td>
+            <td><button class="tdsBotton" id="specialSave" onclick="SendToFacebook()">Save</button></td>
+        </tr>
+        <tr>
+            <td colspan="2" id="specialOutput" ></td>
+        </tr>
+    </table>
+		<!-- JavaScript for Sending special to facebook -->
+		<script type="text/javascript">
+			window.fbAsyncInit = function() {
+				FB.init({
+					appId      : '430409567170283',
+					status     : false,
+					xfbml      : true,
+					version    : 'v2.5'
+				});
+			};
+			(function(d, s, id){
+				 var js, fjs = d.getElementsByTagName(s)[0];
+				 if (d.getElementById(id)) {return;}
+				 js = d.createElement(s); js.id = id;
+				 js.src = "//connect.facebook.net/en_US/sdk.js";
+				 fjs.parentNode.insertBefore(js, fjs);
+			 }(document, 'script', 'facebook-jssdk'));
+
+			function SendToFacebook() {
+				if (document.getElementById('pushSpecialFacebook').checked) {
+					var specName = document.getElementById('specName').value;
+					var message = document.getElementById('specDesc').value;
+
+								FB.login(function (response) {
+										FB.api('/me/accounts', function (apiresponse) {
+
+											 // POSTING AS PAGE CODE WORKS!! HOORAYY!!!
+												var access_token = apiresponse.data[0].access_token;
+												var firstPageId = apiresponse.data[0].id;
+												var data = {
+														message: message,
+														display: 'iframe',
+														caption: "caption",
+														name: specName,
+														description: "description",
+														to: firstPageId, // pageId for page to receive post will pull from resutarant info
+														from: firstPageId, // Page id for Page to be sending post will pull from resutarant info
+														access_token: access_token
+												};
+
+												FB.api('/'+ firstPageId+'/feed', 'post', data, function () {
+														console.log(arguments);
+												});
+											// END OF POSTING AS PAGE CODE
+										});
+
+								}, { scope: 'manage_pages, publish_pages' });
+				}
+			};
+	 </script>
+	
+</div>

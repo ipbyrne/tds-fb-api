@@ -1,0 +1,1101 @@
+<div style="color:red;float:right;" >Please Note: All fields will give confirmation that they are saved automatically.</div>
+
+<?php
+$permission = false;
+if( zSession::checkUser( 70 ) )
+{
+    $permission = true;
+?>
+    <table>
+        <tr>
+            <td>Account Status:</td>
+            <td>
+                <select id="accStatus" >
+                    <option value="test" <?php tdsHelper::getSelected( $row['status'], 'test' ); ?>>Test</option>
+                    <option value="setup" <?php tdsHelper::getSelected( $row['status'], 'setup' ); ?>>Setup</option>
+                    <option value="live" <?php tdsHelper::getSelected( $row['status'], 'live' ); ?>>Live</option>
+                    <option value="hold" <?php tdsHelper::getSelected( $row['status'], 'hold' ); ?>>Hold</option>
+                </select>
+            </td>
+            <td><p id="statusMessage"></p></td>
+        </tr>
+    </table>
+<?php
+
+    $disabled = '';
+}
+else
+{
+    $disabled = 'disabled';
+}
+?>
+
+<div class="restaurant-logo" id="img-0" >
+    <img style="width:200px;" src="<?php echo $row['logo']; ?>"/>
+</div>
+<form method="post" id="fileinfo0" name="fileinfo0" onsubmit="return manageHandler.eImage(0);">
+    <div id="iText-0" ><h2>Upload or update your Logo</h2></div>
+    <input type="file" name="file" required />
+    <input type="hidden" name="zAjax" value="true" >
+    <input type="hidden" name="img" value="logo" >
+    <input type="hidden" name="logoUpload" value="true" >
+    <input type="submit" value="Upload" />
+</form>
+
+<div style="clear:both;"></div>
+<hr />
+<div style="color:red;float:right;" >* If primary information changes, please contact <br>your TDS account manager to update.</div>
+<table>
+    <th>Edit Restaurant Details</th>
+    <tr>
+        <td><label for="aboutName" >Restaurant Name (30 char max)</label></td>
+        <td><input type="text" class="input100-limit300" id="aboutName" value="<?php echo $row['name']; ?>" size="30" maxlength="30" <?php echo $disabled; ?>></td>
+        <td id="aboutNameMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="aboutAddr" >Street Address (30 char max)</label></td>
+        <td><input type="text" class="input100-limit300" id="aboutAddr" value="<?php echo $row['addr']; ?>" size="30" maxlength="30" <?php echo $disabled; ?>></td>
+        <td id="aboutAddrMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="aboutCity" >City</label></td>
+        <td><input type="text" class="input100-limit300" id="aboutCity" value="<?php echo $row['city']; ?>" size="30" maxlength="30" <?php echo $disabled; ?>></td>
+        <td id="aboutCityMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="aboutState" >State</label></td>
+        <td><input type="text" id="aboutState" value="<?php echo $row['state']; ?>" size="2" maxlength="2" <?php echo $disabled; ?>></td>
+        <td id="aboutStateMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="aboutZip" >Zip</label></td>
+        <td><input type="text" id="aboutZip" value="<?php echo $row['zip']; ?>" size="5" maxlength="5" <?php echo $disabled; ?>></td>
+        <td id="aboutZipMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="aboutPhone" >Restaurant Phone</label></td>
+        <td><input type="text" id="aboutPhone" value="<?php echo $row['phone']; ?>" size="13" maxlength="14" <?php echo $disabled; ?>></td>
+        <td id="aboutPhoneMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="pName" >Primary Contact Name</label></td>
+        <td><input type="text" class="input100-limit300" id="pName" value="<?php echo $row['pName']; ?>" size="30" <?php echo $disabled; ?>></td>
+        <td id="pNameMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="pEmail" >Primary Contact Email</label></td>
+        <td><input type="text" class="input100-limit300" id="pEmail" value="<?php echo $row['pEmail']; ?>" size="30" <?php echo $disabled; ?>></td>
+        <td id="pEmailMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="pMobile" >Primary Contact Mobile</label></td>
+        <td><input type="text" class="input100-limit300" id="pMobile" value="<?php echo $row['pMobile']; ?>" size="30" <?php echo $disabled; ?>></td>
+        <td id="pMobileMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="sName" >Secondary Contact Name</label></td>
+        <td><input type="text" class="input100-limit300" id="sName" value="<?php echo $row['sName']; ?>" size="30" ></td>
+        <td id="sNameMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="sEmail" >Secondary Contact Email</label></td>
+        <td><input type="text" class="input100-limit300" id="sEmail" value="<?php echo $row['sEmail']; ?>" size="30" ></td>
+        <td id="sEmailMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="sMobile" >Secondary Contact Mobile</label></td>
+        <td><input type="text" class="input100-limit300" id="sMobile" value="<?php echo $row['sMobile']; ?>" size="30" ></td>
+        <td id="sMobileMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="aboutWebsite" >Website</label></td>
+        <td><input type="text" class="input100-limit300" id="aboutWebsite" value="<?php echo $row['website']; ?>" size="30" ></td>
+        <td id="aboutWebsiteMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="Facebook" >Facebook Page</label></td>
+        <td><input type="text" class="input100-limit300" id="Facebook" value="<?php echo $row['Facebook']; ?>" size="30" ></td>
+        <td id="FacebookMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="Twitter" >Twitter Address</label></td>
+        <td><input type="text" class="input100-limit300" id="Twitter" value="<?php echo $row['Twitter']; ?>" size="30" ></td>
+        <td id="TwitterMessage" ></td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <td><label for="DineIn" >Dine In</label></td>
+        <td><input type="checkbox" class="typeCheckbox" id="DineIn" value="dineIn" <?php tdsHelper::getChecked($row['DineIn']); ?> <?php echo $disabled; ?>></td>
+        <td id="DineInMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="Carryout" >Carryout</label></td>
+        <td><input type="checkbox" class="typeCheckbox" id="Carryout" value="carryout" <?php tdsHelper::getChecked($row['Carryout']); ?> <?php echo $disabled; ?>></td>
+        <td id="CarryoutMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="Delivery" >Delivery</label></td>
+        <td><input type="checkbox" class="typeCheckbox" id="Delivery" value="delivery" <?php tdsHelper::getChecked($row['Delivery']); ?> <?php echo $disabled; ?>></td>
+        <td id="DeliveryMessage" ></td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <td><label for="fineDine" >Fine Dine</label></td>
+        <td><input type="checkbox" class="dtypeCheckbox" id="fineDine" value="fineDine" <?php tdsHelper::getChecked($row['fineDine']); ?> <?php echo $disabled; ?>></td>
+        <td id="fineDineMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="casualDine" >Casual Dine</label></td>
+        <td><input type="checkbox" class="dtypeCheckbox" id="casualDine" value="casualDine" <?php tdsHelper::getChecked($row['casualDine']); ?> <?php echo $disabled; ?>></td>
+        <td id="casualDineMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="familyDine" >Family Dine (No Alchohol Served)</label></td>
+        <td><input type="checkbox" class="dtypeCheckbox" id="familyDine" value="familyDine" <?php tdsHelper::getChecked($row['familyDine']); ?> <?php echo $disabled; ?>></td>
+        <td id="familyDineMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="quickServe" >Quick Serve</label></td>
+        <td><input type="checkbox" class="dtypeCheckbox" id="quickServe" value="quickServe" <?php tdsHelper::getChecked($row['quickServe']); ?> <?php echo $disabled; ?>></td>
+        <td id="quickServeMessage" ></td>
+    </tr>
+</table>
+
+<table>
+    <tr>
+        <td><label for="resultPromo" >Result Page Promo</label></td>
+        <td>
+            <select id="resultPromo" >
+                <option value="1" <?php tdsHelper::getSelected( $row['resultPromo'], '1' ); ?>>Get Promo Code</option>
+                <option value="2" <?php tdsHelper::getSelected( $row['resultPromo'], '2' ); ?>>No Promo Code Needed</option>
+                <option value="3" <?php tdsHelper::getSelected( $row['resultPromo'], '3' ); ?>>Make Reservation</option>
+                <option value="4" <?php tdsHelper::getSelected( $row['resultPromo'], '4' ); ?>>Order Online Now</option>
+                <option value="5" <?php tdsHelper::getSelected( $row['resultPromo'], '5' ); ?>>Add Name to Waitlist</option>
+                <option value="6" <?php tdsHelper::getSelected( $row['resultPromo'], '6' ); ?>>Kids Eat Free</option>
+            </select>
+        </td>
+        <td>
+            <span id="resultPromoMessage" ></span>
+        </td>
+    </tr>
+</table>
+
+
+
+<div style="clear:both;"></div>
+
+<hr />
+<br />
+<h2><label for="history" >Tell us the story/history of your restaurant(s): </label></h2><span id="historyMessage" ></span>
+<br>
+<textarea id="history"  class="input100" style="height:80px;" ><?php echo $row['description']; ?></textarea>
+<br /><br />
+<hr />
+<br />
+
+<div style="clear:both;"></div>
+<hr />
+<br />
+<h2><label for="social" >Social Sharing: </label></h2>
+<strong>Facebook Linking Instructions:</strong>
+<ol style="margin-left: 30px;">
+    <li>If you are a page administrator for your business page press the "Log In" button to get access to the page.<br>
+        <strong>NOTE:</strong> You must grant all privileges asked for so your specials will post to your Business page.<br>
+        <strong>TDS will never post to your personal page, this linking will only be used to add likes and for specials you push out.</strong></li>
+    <li>Once you logged in and granted access. Click the link/relink Button</li>
+    <li>Select the page you would like us to post your specials too. Then press "Select".</li>
+    <li>If your page was configured properly "Linked" will be displayed in green below.</li>
+    <li>If "Linked" does not show, contact your sales rep for assistance.</li>
+</ol><br>
+<button id="fbLogin">Link/Relink Facebook</button>
+<button id="fbReviews" onclick="SendToFacebook()">Publish Reviews</button>
+<script type="text/javascript">
+	window.fbAsyncInit = function() {
+		FB.init({
+			appId      : '430409567170283',
+			status     : false,
+			xfbml      : true,
+			version    : 'v2.5'
+		});
+	};
+	(function(d, s, id){
+		 var js, fjs = d.getElementsByTagName(s)[0];
+		 if (d.getElementById(id)) {return;}
+		 js = d.createElement(s); js.id = id;
+		 js.src = "//connect.facebook.net/en_US/sdk.js";
+		 fjs.parentNode.insertBefore(js, fjs);
+	 }(document, 'script', 'facebook-jssdk'));
+
+	function SendToFacebook() {
+					FB.login(function (response) {
+							FB.api('/me/accounts', function (apiresponse) {
+								// PULLING PAGE REVIEWS AND POSTING THEM TO PAGE
+									FB.api('/'+ firstPageId+'/ratings', 'get', data, function() {
+											console.log(arguments[0].data.length);
+
+												for (i = 0; i < arguments[0].data.length; i++) {
+														var reviewRating = arguments[0].data[i].rating;
+														var reviewText = arguments[0].data[i].review_text;
+														// Make AJAX Call to insert each review item into the database.
+												};
+									});
+								// END OF PULLING PAGE REVIEW CODES!!!
+							});
+
+					}, { scope: 'manage_pages, publish_pages' });
+};
+</script>
+<div id="FbLoginbtn" style="float:right; margin: 0px 10px;">
+    <fb:login-button scope="public_profile,email,manage_pages,publish_actions" onlogin="checkLoginState();"></fb:login-button>
+</div>
+<form method="post" id="fbsocial" name="fbsocial" onsubmit="return manageHandler;">
+    <div id="status">
+        <?php
+        // TODO : Move this whole section into a method of the tdsFacebook model.
+        $FB_id = $_POST['LocSel'];
+        $fbSel = $_POST['fb'];
+        $fbSelId = $fbSel['id'][$FB_id];
+        $fbSelName = $fbSel['name'][$FB_id];
+        $fbSelToken = $fbSel['token'][$FB_id];
+
+        if($fbSelId == 'clear'){
+            $fbclear = 'clear';
+            $fbSelId = '';
+            $fbSelName = '';
+            $fbSelToken = '';
+        } else {
+            /*Start Long Lived Access Token*/
+            $accessToken = $fbSelToken;
+            $pageId = $fbSelId;
+
+            $fArray = tdsFacebook::getAppIds();
+            $fbAppId = $fArray['id'];
+            $fbAppSecret = $fArray['secret'];
+
+            $appsecretProof = hash_hmac('sha256', $accessToken, $fbAppSecret);
+            //init curl
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_USERAGENT, 'facebook-php-3.2');
+
+            //get extended user access token
+            $url = 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=' . $fbAppId . '&client_secret=' . $fbAppSecret . '&fb_exchange_token=' . $accessToken . '&appsecret_proof=' . $appsecretProof . '';
+            curl_setopt($ch, CURLOPT_URL, $url);
+            $curlResult = curl_exec($ch);
+            $response_params = array();
+            parse_str($curlResult, $response_params);
+            $extendedUserToken = $response_params['access_token'];
+
+            $appsecretProof = hash_hmac('sha256', $extendedUserToken, $fbAppSecret);
+            //get extended page access token
+            $url = 'https://graph.facebook.com/' . $pageId .
+                '?fields=access_token' .
+                '&access_token=' . $extendedUserToken .
+                '&appsecret_proof=' . $appsecretProof;
+            curl_setopt($ch, CURLOPT_URL, $url);
+            $curlResult = curl_exec($ch);
+            curl_close($ch);
+            $pageToken = json_decode($curlResult)->access_token;
+
+            $fbExtToken = $pageToken;
+        }
+        /*END Long Lived Access Token*/
+        if(strlen($fbSelId) > 0 && strlen($fbSelName) > 0 && strlen($fbExtToken) >= 0) {
+            $fbperms['fbSelId'] = $fbSelId;
+            $fbperms['fbSelName'] = $fbSelName;
+            $fbperms['fbExtToken'] = $fbExtToken;
+            tdsFacebook::saveCreds( $p1, 'fbperms', $fbperms );
+            //echo'Inside Load: Id: '.$fbperms['fbSelId'].' Name: '.$fbperms['fbSelName'].' AUTH: '.$fbperms['fbExtToken'].'<br>';
+        }
+        if($fbclear=='clear') {
+            $fbperms['fbSelId'] = $fbSelId;
+            $fbperms['fbSelName'] = $fbSelName;
+            $fbperms['fbExtToken'] = $fbExtToken;
+            tdsFacebook::saveCreds( $p1, 'fbperms', $fbperms );
+            echo '<div id="CRinfo"><strong>Facebook Page Has been Removed.</strong></div>';
+        }
+
+        if($f = tdsFacebook::getCreds( $row['id'] )) {
+            $fbSelId = $f['fbperms']['fbSelId'];
+            $fbSelName = $f['fbperms']['fbSelName'];
+            $fbExtToken = $f['fbperms']['fbExtToken'];
+             //echo'inside Recall: Id: '.$fbSelId.' Name: '.$fbSelName.'<br>';
+         }
+        if(strlen($fbSelId) > 0 && strlen($fbSelName) > 0 && strlen($fbExtToken) >= 0)    {
+            echo'
+            <h3>Selected Facebook Page:</h3>
+            <div style="margin: 5px; padding: 5px; float: left; color:#007236;"><h1>Linked</h1></div>
+            <div class="fb_result"  style="margin: 5px; padding: 5px; float: left;"><strong>'.$fbSelName.'</strong><br><strong>ID: </strong>'.$fbSelId.'<br></div>
+            <div style="margin: 5px; padding: 5px; float: left;"><strong>Token: </strong>'; if(strlen($fbExtToken) > 65) { echo'Extended Token Set'; } echo '
+            <button id="testPost" data-fbSCname="TDS ~ Special"
+            data-fbSpgName ="'.$fbSel['name'][$FB_id].'"
+            data-fbSpgId ="'.$fbSel['id'][$FB_id].'"
+            data-fbSpgToken ="'.$fbSel['token'][$FB_id].'"
+            data-fbEXTpgToken ="'.$fbExtToken.'"
+            data-fbSClink="http://todaysdiningspecials.com/"
+            data-fbSCpicture="http://www.todaysdiningspecials.com/img/logo_social_sq.png"
+            data-fbSCcaption="One click away from Today\'s Dining Special"
+            data-fbSCheader="New Specials Daily"
+            data-fbSCdescription="Get quick access to '.$fbSelName.' current specials here on Facebook or @ Today\'s Dining Specials."
+            data-fbSCmessage="">Test Post</button></div>
+            <br><br><br>
+            <div id="mainTestimg" style="font-weight:bold; text-decoration:underline;">Show Test Post Sample</div>';
+        }
+        ?>
+
+        <div id="dialog" title="Features Key">
+            <img alt="Test Post Sample" src = "../img/test_post_sample.jpg" style="width:100%; height: auto;" />
+            <div style="clear: both"></div>
+        </div>
+    </div>
+</form>
+<script>
+    //Open Dialog Box
+    $(function() {
+        $('#dialog').dialog({
+            autoOpen: false,
+            show: {
+                effect: "blind",
+                duration: 500
+            },
+            hide: {
+                effect: "blind",
+                duration: 500
+            }
+        });
+        $('#mainTestimg').click(function() {
+            $( "#dialog" ).dialog( "open");
+        });
+    });
+
+    //Dialog Box Render for window change.
+    $(window).resize(function() {
+        $('#dialog').dialog({
+            autoOpen: false,
+            show: {
+                effect: "blind",
+                duration: 500
+            },
+            hide: {
+                effect: "blind",
+                duration: 500
+            }
+        });
+
+    });
+
+    // This is called with the results from from FB.getLoginStatus().
+    function statusChangeCallback(response) {
+        console.log('statusChangeCallback');
+        console.log(response);
+        // The response object is returned with a status field that lets the
+        // app know the current login status of the person.
+        // Full docs on the response object can be found in the documentation
+        // for FB.getLoginStatus().
+        if (response.status === 'connected') {
+            // Logged into your app and Facebook.
+            testAPI();
+        } else if (response.status === 'not_authorized') {
+            // The person is logged into Facebook, but not your app.
+            alert('There was a problem accessing your accounts. If the problem persist contact are tech support.');
+            document.getElementById('status').innerHTML = 'Please log into this app.';
+        } else {
+            // The person is not logged into Facebook, so we're not sure if
+            // they are logged into this app or not.
+            document.getElementById('status').innerHTML = 'Please log into Facebook.';
+        }
+    }
+
+    function checkLoginState() {
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+        });
+    }
+
+    function testAPI() {
+        console.log('Welcome!  Fetching your information.... ');
+        FB.api('/me', function(response) {
+            console.log('Successful login for: ' + response.name);
+            document.getElementById('status').innerHTML =
+                'Thanks for logging in, ' + response.name + '!';
+
+        });
+    }
+
+    function fbselect(fbSid, fbSname, fbStoken) {
+        alert('SELECTION MADE!.');
+        document.getElementById('status').innerHTML = '';
+        document.getElementById('status').innerHTML = 'We have save your Page Data For:<br>NAME: ' +fbSname+ ' <br>ID: ' +fbSid+ ' <br><br><br> ';
+    }
+
+    $("button[id^='testPost']").on('click', function(x) {
+        x.preventDefault();
+
+        var idNum = $(this).attr('id').replace(/testPost/, '');
+
+        var fbSpgId = $(this).attr("data-fbSpgId"); //Page ID
+        var fbSpgName = $(this).attr("data-fbSpgName"); //Page Name
+        var fbSpgToken = $(this).attr("data-fbSpgToken"); //Page Auth Token
+        var fbEXTpgToken = $(this).attr("data-fbEXTpgToken"); //Page Auth Token
+
+        var fbSCname = $(this).attr("data-fbSCname"); //SHARED LINK HEADER
+        var fbSClink = $(this).attr("data-fbSClink"); //full path ex. http://todaysdiningspecials.com
+        var fbSCpicture = $(this).attr("data-fbSCpicture"); //full path ex. http://www.todaysdiningspecials.com/img/restaurant-ph-share-btns.png
+        var fbSCcaption = $(this).attr("data-fbSCcaption"); //full path ex. http://www.todaysdiningspecials.com/img/restaurant-ph-share-btns.png
+        var fbSCheader = $(this).attr("data-fbSCheader"); //Sub-Header > Caption. Just above description.
+        var fbSCdescription = $(this).attr("data-fbSCdescription"); //Shared description.
+        var fbSCmessage = $(this).attr("data-fbSCmessage"); //Custom User Message (Most likely not used).
+
+        FB.api('/'+fbSpgId+'/feed', 'post', {
+            link: fbSClink,
+            picture: fbSCpicture,
+            caption: fbSCheader,
+            description: fbSCdescription,
+            access_token: fbEXTpgToken,
+            message: fbSCmessage
+
+        }, function(response) {
+            if (!response || response.error) {
+                alert('Error occured');
+            } else {
+                alert('Successfully posted to: ' + fbSpgName+' Wall');
+            }
+        });
+    });
+
+    $("#fbLogin").on('click', function() {
+
+        FB.getLoginStatus(function(response) {
+            if (response.status === 'connected') {
+                var uid = response.authResponse.userID;
+                var accessToken = response.authResponse.accessToken;
+                var acct = response.authResponse.accounts;
+
+                FB.api(
+                    "/me/permissions",
+                    function (response) {
+                        if (response && !response.error) {
+                            //Check user Authorization.
+                        var index;
+                        var a = ["a", "b", "c"];
+                        for (index = 0; index < response.length; ++index) {
+                            console.log(response['data'][index]['permission']+' -- '+response['data'][index]['status']);
+                        }
+
+                           /* FB.login(function(response) {
+                                // handle the response
+                            }, {
+                                scope: 'publish_actions',
+                                return_scopes: true
+                            });*/
+                        } else {
+                            alert('There was a problem accessing your accounts. If the problem persist contact are tech support.');
+                            var global authErr = 1;
+                        }
+                    }
+                );
+
+                FB.api(
+                    "/me/accounts",
+                    function (response) {
+                        var global authErr;
+                        if (response && !response.error && authErr!=1) {
+                            document.getElementById('status').innerHTML = '<div id="fbinner"><div id="innerContent"><h3>Select Your Business Page:</h3></div></div>';
+                            var locid = '<?php echo $fbSelName; ?>';
+
+                            if(locid.length > 1) {
+                                var i = 'clear';
+                                document.getElementById('innerContent').innerHTML += '<input type="radio" name="LocSel" value="'+i+'">UNLINK ACCOUNT<br><input type="hidden" name="fb[id]['+i+']" value="'+i+'"> <input type="hidden" name="fb[name]['+i+']" value="'+i+'"><input type="hidden" name="fb[token]['+i+']" value="'+i+'">';
+                                i = 0;
+                            }
+
+                            for (var i in response.data) {
+                                document.getElementById('innerContent').innerHTML += '<input type="radio" name="LocSel" value="'+i+'">'+response.data[i].name+'<br><input type="hidden" name="fb[id]['+i+']" value="'+response.data[i].id+'"> <input type="hidden" name="fb[name]['+i+']" value="'+response.data[i].name+'"><input type="hidden" name="fb[token]['+i+']" value="'+response.data[i].access_token+'"> ';
+                            }
+                            document.getElementById('innerContent').innerHTML += '<input type="submit" name="submit" value="Select" /></div> ';
+
+                        } else {
+                            alert('There was a problem accessing your accounts. Try pressing login button. If the problem persist contact are tech support.')
+                        }
+                    }
+                );
+
+            } else if (response.status === 'not_authorized') {
+                alert('We need your permission to Push your promotion to your Facebook.');
+            } else {
+                alert('You are not login to Facebook. Please Click on the Facebook login button.');
+
+            }
+        },{});
+    });
+
+</script>
+<br>
+<br>
+<strong>Twitter Linking Instructions: <a href="/twitterhelp" target="_blank" >Click here for help setting up.</a></strong>
+<br>
+<br>
+<?php
+    $tconnection = tdsTwitter::checkConnection( $row['id'] );
+    $t = tdsTwitter::getCreds( $row['id'] );
+
+    $tConnMess = '<span style="color:red;" >Not Connected!</span>';
+    if( $tconnection )
+    {
+        $tConnMess = '<span style="color:green;" >Connection Success!</span>';
+    }
+?>
+<label for="twitterOT" >Twitter Oauth Token: </label>
+<input type="text" class="input100" id="twitterOT" size="55" value="<?php echo $t['twitterOT']; ?>" >
+<br>
+<label for="twitterOS" >Twitter Oauth Secret: </label>
+<input type="text" class="input100" id="twitterOS" size="55" value="<?php echo $t['twitterOS']; ?>" >
+<br>
+<label for="twitterCK" >Twitter Consumer Key: </label>
+<input type="text" class="input100" id="twitterCK" size="55" value="<?php echo $t['twitterCK']; ?>" >
+<br>
+<label for="twitterCS" >Twitter Consumer Secret: </label>
+<input type="text" class="input100" id="twitterCS" size="55" value="<?php echo $t['twitterCS']; ?>" >
+<br /><br />
+<span id="socialMessage" >Status: <?php echo $tConnMess; ?></span>
+<hr />
+<br />
+
+
+<div style="clear:both;"></div>
+
+<?php
+if( $permission ) // TODO : Convert to new permissions
+{
+?>
+<br>
+<h2><label for="permissionEmail" >Manage Permissions: </label></h2><span id="permissionMessage" ></span>
+<br>
+<table>
+    <tr>
+        <th>Email</th>
+        <th>Permission</th>
+        <th>Remove</th>
+    </tr>
+<?php
+    $users = tdsPermissions::getUsersByRestId( $row['id'] );
+    foreach( $users as $user )
+    {
+        $email = $user['email'];//tdsUser::getEmailById( $user['uid'] );
+        /*if( $email == "webmaster@tdsapp.com"    || $email == "cbanks@tdsapp.com"
+                                                        || $email == "tmitchell@tdsapp.com"
+                                                        || $email == "banks3188@yahoo.com"
+                                                        || $email == "rmichanowicz@tdsapp.com"
+                                                        || $email == "sallen@tdsapp.com"
+                                                        || $email == "c.givens@centerworkpro.com"
+                                                        || strpos( $email, "tdsapp.com" ) === true )*/
+
+        if( 1 )//$user['perm'] != "TDS Admin" && $user['perm'] != "TDS State" && $user['perm'] != "TDS SAMM" )
+        {
+            echo '<tr><td style="padding-right:20px;" >' . $email . '</td>';
+
+            if( $user['perm'] != "TDS Admin" )
+            {
+                ?>
+                <td>
+                    <select class="permissionChange" data-key="<?php echo $user['id']; ?>" >
+                        <option<?php if( $user['perm'] == "TDS Admin" ){ echo " selected"; }?>>TDS Admin</option>
+                        <option<?php if( $user['perm'] == "TDS State" ){ echo " selected"; }?>>TDS State</option>
+                        <option<?php if( $user['perm'] == "TDS SAMM" ){ echo " selected"; }?>>TDS SAMM</option>
+                        <option<?php if( $user['perm'] == "Owner" ){ echo " selected"; }?>>Owner</option>
+                        <option<?php if( $user['perm'] == "Mkt Mgr" ){ echo " selected"; }?>>Mkt Mgr</option>
+                        <option<?php if( $user['perm'] == "Unit Mgr" ){ echo " selected"; }?>>Unit Mgr</option>
+                        <option<?php if( $user['perm'] == "Basic" ){ echo " selected"; }?>>Basic</option>
+                    </select>
+                </td>
+                <td><button class="permissionDelete" data-key="<?php echo $user['id']; ?>" >Delete</button></td>
+            <?php
+            }
+            else
+            {
+                ?><td><?php echo $user['perm']; ?></td><?php
+            }
+
+            echo '</tr>';
+        }
+    }
+?>
+</table>
+<br><br>
+    <?php
+    if( 1 )//$user['perm'] != "Basic" && $user['perm'] != "Unit Mgr" && $user['perm'] != "Mkt Mgr" )
+    {
+    ?>
+        <input type="text" id="permissionEmail" placeholder="user@domain.com" >
+        <button id="permissionButton" >Add User</button>
+    <?php
+    }
+    ?>
+<br>
+<hr />
+<br>
+<?php } ?>
+
+<div class="restaurant-logo" id="img-1" >
+    <img style="width:200px;" src="<?php echo $row['img1']; ?>"/>
+</div>
+<form method="post" id="fileinfo1" name="fileinfo1" onsubmit="return manageHandler.eImage(1);">
+    <div id="iText-1" ><h2>Upload or Change A Picture of Your Restaurant:</h2></div>
+    <input type="file" name="file" required />
+    <input type="hidden" name="zAjax" value="true" >
+    <input type="hidden" name="img" value="img1" >
+    <input type="hidden" name="logoUpload" value="true" >
+    <input type="submit" value="Upload" />
+</form>
+
+<div style="clear:both;"></div>
+<br />
+<div class="restaurant-logo" id="img-2" >
+    <img style="width:200px;" src="<?php echo $row['img2']; ?>"/>
+</div>
+<form method="post" id="fileinfo2" name="fileinfo2" onsubmit="return manageHandler.eImage(2);">
+    <div id="iText-2" ><h2>Upload or Change A 2nd Picture of Your Restaurant</h2></div>
+    <input type="file" name="file" required />
+    <input type="hidden" name="zAjax" value="true" >
+    <input type="hidden" name="img" value="img2" >
+    <input type="hidden" name="logoUpload" value="true" >
+    <input type="submit" value="Upload" />
+</form>
+<br />
+<div style="clear:both;"></div>
+
+<div class="restaurant-logo" id="img-3" >
+    <img style="width:200px;" src="<?php echo $row['img3']; ?>"/>
+</div>
+<form method="post" id="fileinfo3" name="fileinfo3" onsubmit="return manageHandler.eImage(3);">
+    <div id="iText-3" ><h2>Upload or Change A 3rd Picture of Your Restaurant</h2></div>
+    <input type="file" name="file" required />
+    <input type="hidden" name="zAjax" value="true" >
+    <input type="hidden" name="img" value="img3" >
+    <input type="hidden" name="logoUpload" value="true" >
+    <input type="submit" value="Upload" />
+</form>
+<br />
+<div style="clear:both;"></div>
+
+<hr />
+<br />
+<p>
+    <label for="Attire" >DRESS CODE:</label>
+    <select id="Attire" >
+        <option value="Casual" <?php tdsHelper::getSelected( $row['Attire'], 'Casual' ); ?>>Casual</option>
+        <option value="Business Casual" <?php tdsHelper::getSelected( $row['Attire'], 'Business Casual' ); ?>>Business Casual</option>
+        <option value="Coat & Tie" <?php tdsHelper::getSelected( $row['Attire'], 'Coat & Tie' ); ?>>Coat & Tie</option>
+        <option value="Proper Attire" <?php tdsHelper::getSelected( $row['Attire'], 'Proper Attire' ); ?>>Proper Attire</option>
+    </select>
+    <span id="AttireMessage" ></span>
+    <br><br>
+</p>
+
+<p>Credit Cards Accepted:<span id="cardMessage" ></span>
+<table>
+    <tr>
+        <td><label for="Mastercard" >Mastercard</label></td>
+        <td><input class="ccBox" type="checkbox" id="Mastercard" value="Mastercard" <?php tdsHelper::getChecked($row['Mastercard']); ?>></td>
+        <td id="MastercardMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="Visa" >Visa</label></td>
+        <td><input class="ccBox" type="checkbox" id="Visa" value="Visa" <?php tdsHelper::getChecked($row['Visa']); ?>></td>
+        <td id="VisaMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="Discover" >Discover</label></td>
+        <td><input class="ccBox" type="checkbox" id="Discover" value="Discover" <?php tdsHelper::getChecked($row['Discover']); ?>></td>
+        <td id="DiscoverMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="AmEx" >American Express</label></td>
+        <td><input class="ccBox" type="checkbox" id="AmEx" value="AmEx" <?php tdsHelper::getChecked($row['AmEx']); ?>></td>
+        <td id="AmExMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="Diners" >Diners</label></td>
+        <td><input class="ccBox" type="checkbox" id="Diners" value="Diners" <?php tdsHelper::getChecked($row['Diners']); ?>></td>
+        <td id="DinersMessage" ></td>
+    </tr>
+    <tr>
+        <td><label for="JVC" >JVC</label></td>
+        <td><input class="ccBox" type="checkbox" id="JVC" value="JVC" <?php tdsHelper::getChecked($row['JVC']); ?>></td>
+        <td id="JVCMessage" ></td>
+    </tr>
+</table>
+
+<hr />
+<br />
+<h2>HOURS:</h2>
+<table>
+    <tr>
+        <th>Day</th>
+        <th>Open to Close</th>
+        <th style="text-align:left;" >Check if Closed</th>
+        <th></th>
+    </tr>
+    <tr>
+        <td>Sun</td>
+        <td>
+            <select class="hourSelection" id="oSunday" data-oc="o" data-dow="Sunday" >
+                <?php tdsHelper::getTime( $sunday[0] ); ?>
+            </select> to
+            <select class="hourSelection" id="clSunday" data-oc="c" data-dow="Sunday" >
+                <?php tdsHelper::getTime( $sunday[1] ); ?>
+            </select>
+        </td>
+        <td><input type="checkbox" class="closedBox" id="cSunday" data-dow="Sunday" <?php tdsHelper::getChecked($row['cSunday']); ?>></td>
+        <td id="SundayMessage" ></td>
+    </tr>
+
+    <tr>
+        <td>Mon</td>
+        <td>
+            <select class="hourSelection" id="oMonday" data-oc="o" data-dow="Monday" >
+                <?php tdsHelper::getTime( $monday[0] ); ?>
+            </select> to
+            <select class="hourSelection" id="clMonday" data-oc="c" data-dow="Monday" >
+                <?php tdsHelper::getTime( $monday[1] ); ?>
+            </select>
+        </td>
+        <td><input type="checkbox" class="closedBox" id="cMonday" data-dow="Monday" <?php tdsHelper::getChecked($row['cMonday']); ?>></td>
+        <td id="MondayMessage" ></td>
+    </tr>
+
+    <tr>
+        <td>Tue</td>
+        <td>
+            <select class="hourSelection" id="oTuesday" data-oc="o" data-dow="Tuesday" >
+                <?php tdsHelper::getTime( $tuesda[0] ); ?>
+            </select> to
+            <select class="hourSelection" id="clTuesday" data-oc="c" data-dow="Tuesday" >
+                <?php tdsHelper::getTime( $tuesda[1] ); ?>
+            </select>
+        </td>
+        <td><input type="checkbox" class="closedBox" id="cTuesday" data-dow="Tuesday" <?php tdsHelper::getChecked($row['cTuesday']); ?>></td>
+        <td id="TuesdayMessage" ></td>
+    </tr>
+
+    <tr>
+        <td>Wed</td>
+        <td>
+            <select class="hourSelection" id="oWednesday" data-oc="o" data-dow="Wednesday" >
+                <?php tdsHelper::getTime( $wednes[0] ); ?>
+            </select> to
+            <select class="hourSelection" id="clWednesday" data-oc="c" data-dow="Wednesday" >
+                <?php tdsHelper::getTime( $wednes[1] ); ?>
+            </select>
+        </td>
+        <td><input type="checkbox" class="closedBox" id="cWednesday" data-dow="Wednesday" <?php tdsHelper::getChecked($row['cWednesday']); ?>></td>
+        <td id="WednesdayMessage" ></td>
+    </tr>
+
+    <tr>
+        <td>Thr</td>
+        <td>
+            <select class="hourSelection" id="oThursday" data-oc="o" data-dow="Thursday" >
+                <?php tdsHelper::getTime( $thursd[0] ); ?>
+            </select> to
+            <select class="hourSelection" id="clThursday" data-oc="c" data-dow="Thursday" >
+                <?php tdsHelper::getTime( $thursd[1] ); ?>
+            </select>
+        </td>
+        <td><input type="checkbox" class="closedBox" id="cThursday" data-dow="Thursday" <?php tdsHelper::getChecked($row['cThursday']); ?>></td>
+        <td id="ThursdayMessage" ></td>
+    </tr>
+
+    <tr>
+        <td>Fri</td>
+        <td>
+            <select class="hourSelection" id="oFriday" data-oc="o" data-dow="Friday" >
+                <?php tdsHelper::getTime( $friday[0] ); ?>
+            </select> to
+            <select class="hourSelection" id="clFriday" data-oc="c" data-dow="Friday" >
+                <?php tdsHelper::getTime( $friday[1] ); ?>
+            </select>
+        </td>
+        <td><input type="checkbox" class="closedBox" id="cFriday" data-dow="Friday" <?php tdsHelper::getChecked($row['cFriday']); ?>></td>
+        <td id="FridayMessage" ></td>
+    </tr>
+
+    <tr>
+        <td>Sat</td>
+        <td>
+            <select class="hourSelection" id="oSaturday" data-oc="o" data-dow="Saturday" >
+                <?php tdsHelper::getTime( $saturd[0] ); ?>
+            </select> to
+            <select class="hourSelection" id="clSaturday" data-oc="c" data-dow="Saturday" >
+                <?php tdsHelper::getTime( $saturd[1] ); ?>
+            </select>
+        </td>
+        <td><input type="checkbox" class="closedBox" id="cSaturday" data-dow="Saturday" <?php tdsHelper::getChecked($row['cSaturday']); ?>></td>
+        <td id="SaturdayMessage" ></td>
+    </tr>
+    <tr>
+        <td colspan="2" >Check if closed between Lunch & Dinner</td>
+        <td><input type="checkbox" class="closedBox" id="closedBetweenBox" <?php tdsHelper::getChecked($row['closebox']); ?>></td>
+        <td id="close1Message" ></td>
+    </tr>
+    <tr id="closedRow" style="display:none;" >
+        <td colspan="2" >Hours closed between Lunch & Dinner</td>
+        <td>
+            <select class="closeTime" id="closeTime1" >
+                <?php tdsHelper::getTime( $closed[0], true ); ?>
+            </select> to
+            <select class="closeTime" id="closeTime2" >
+                <?php tdsHelper::getTime( $closed[1], true ); ?>
+            </select>
+        </td>
+        <td id="close2Message" ></td>
+    </tr>
+</table>
+
+<br>
+
+<hr />
+<br />
+<h2>Enable Options</h2>
+<table>
+    <!--<tr>
+        <td>Check to Show Yelp Rating</td>
+        <td><input type="checkbox" class="enableOptionsBox" id="yRating" <?php tdsHelper::getChecked($row['yRating']); ?>></td>
+        <td id="yRating-M" ></td>
+    </tr>
+    <tr id="YelpRow" >
+        <td><label for="Yelp" >Yelp Reviews</label></td>
+        <td><input type="text" class="input100-limit300" id="Yelp" value="<?php echo $row['Yelp']; ?>" size="30" ></td>
+        <td id="YelpMessage" ></td>
+    </tr>
+    <tr>
+        <td>Check to Show Google+ Rating</td>
+        <td><input type="checkbox" class="enableOptionsBox" id="gRating" <?php tdsHelper::getChecked($row['gRating']); ?>></td>
+        <td id="gRating-M" ></td>
+    </tr>-->
+    <tr>
+        <td>Accept Reservations for any size party</td>
+        <td><input type="checkbox" class="enableOptionsBox" id="reserveBox" <?php tdsHelper::getChecked($row['reserveBox']); ?>></td>
+        <td id="reserveBox-M" ></td>
+    </tr>
+    <tr>
+        <td>Accept Reservations for groups over <input type="text" id="reservationSize" size="5" value="<?php echo $row['reserveNumber']; ?>" ></td>
+        <td><input type="checkbox" id="reserveBox2" <?php if( $row['reserveNumber'] > 0 ){ echo 'checked'; } ?>></td>
+        <td id="LongUniqueNameForMessageBox" ></td>
+    </tr>
+    <tr>
+        <td>Accept Names to be added to Waitlist</td>
+        <td><input type="checkbox" class="enableOptionsBox" id="waitlistBox" <?php tdsHelper::getChecked($row['waitlistBox']); ?>></td>
+        <td id="waitlistBox-M" ></td>
+    </tr>
+    <tr>
+        <td>Accept Online Orders</td>
+        <td><input type="checkbox" class="enableOptionsBox" id="onlineOrderBox" <?php tdsHelper::getChecked($row['onlineOrderBox']); ?>></td>
+        <td id="onlineOrderBox-M" ></td>
+    </tr>
+</table>
+
+<!--<p>Mobile Number to send notifications (including Reservations, Waitlist, and or Orders) to:</p>-->
+<?php $managePhone = explode( '@', $row['managePhone'] );//var_dump($managePhone); ?>
+<p>Reservations, Waitlists, and Orders will be sent to the mobile number and/or email below.</p>
+<table id="rwoNumberTable" style="display:none;" >
+    <tr>
+        <td style="text-align:right;" ><label for="mobile" >Add Number: </label></td>
+        <td><input type="text" id="mobile" size="13" maxlength="13" value="<?php echo $managePhone[0]; ?>" ></td>
+        <td style="text-align:right;" ><label for="carrier" >Select Carrier: </label></td>
+        <td>
+            <select id="carrier" >
+                <option value="txt.att.net" <?php tdsHelper::getSelected( $managePhone[1], 'txt.att.net' ); ?>>AT&T</option>
+                <option value="myboostmobile.com" <?php tdsHelper::getSelected( $managePhone[1], 'myboostmobile.com' ); ?>>Boost Mobile</option>
+                <option value="comcastpcs.textmsg.com" <?php tdsHelper::getSelected( $managePhone[1], 'comcastpcs.textmsg.com' ); ?>>Comcast</option>
+                <option value="mymetropcs.com" <?php tdsHelper::getSelected( $managePhone[1], 'mymetropcs.com' ); ?>>Metro PCS</option>
+                <option value="messaging.sprintpcs.com" <?php tdsHelper::getSelected( $managePhone[1], 'messaging.sprintpcs.com' ); ?>>Sprint</option>
+                <option value="tmomail.net" <?php tdsHelper::getSelected( $managePhone[1], 'tmomail.net' ); ?>>T-Mobile</option>
+                <option value="vtext.com" <?php tdsHelper::getSelected( $managePhone[1], 'vtext.com' ); ?>>Verizon</option>
+                <option value="vmobl.com" <?php tdsHelper::getSelected( $managePhone[1], 'vmobl.com' ); ?>>Virgin Mobile</option>
+            </select>
+        </td>
+        <td id="phoneNumberM" ></td>
+    </tr>
+    <tr>
+        <td style="text-align:right;" ><label for="manageEmail" >Add Email: </label></td>
+        <td><input type="text" size="20" id="manageEmail" value="<?php echo $row['manageEmail']; ?>" ></td>
+        <td id="manageEmailM" ></td>
+    </tr>
+</table>
+
+<br>
+
+<hr />
+<br />
+<h2>Features</h2>
+<table>
+    <tr>
+        <td>Adult Beverages (Inc. Spirits)</td>
+        <td><input class="featureBox" type="checkbox" id="Spirits" <?php tdsHelper::getChecked($row['Spirits']); ?>></td>
+        <td id="Spirits-M" ></td>
+    </tr>
+    <tr>
+        <td>Beer</td>
+        <td><input class="featureBox" type="checkbox" id="Beer" <?php tdsHelper::getChecked($row['Beer']); ?>></td>
+        <td id="Beer-M" ></td>
+    </tr>
+    <tr>
+        <td>Wine</td>
+        <td><input class="featureBox" type="checkbox" id="Wine" <?php tdsHelper::getChecked($row['Wine']); ?>></td>
+        <td id="Wine-M" ></td>
+    </tr>
+    <!--<tr>
+        <td>Carryout</td>
+        <td></td>
+        <td></td>
+    </tr>-->
+    <tr>
+        <td>Call Ahead Seating</td>
+        <td><input class="featureBox" type="checkbox" id="CallSeating" <?php tdsHelper::getChecked($row['CallSeating']); ?>></td>
+        <td id="CallSeating-M" ></td>
+    </tr>
+    <tr>
+        <td>Comedy Shows</td>
+        <td><input class="featureBox" type="checkbox" id="Comedy" <?php tdsHelper::getChecked($row['Comedy']); ?>></td>
+        <td id="Comedy-M" ></td>
+    </tr>
+    <tr>
+        <td>Dart Boards</td>
+        <td><input class="featureBox" type="checkbox" id="Darts" <?php tdsHelper::getChecked($row['Darts']); ?>></td>
+        <td id="Darts-M" ></td>
+    </tr>
+    <!--<tr>
+        <td>Delivery</td>
+        <td></td>
+        <td></td>
+    </tr>-->
+    <tr>
+        <td>Dinner Theatre</td>
+        <td><input class="featureBox" type="checkbox" id="DinerTheatre" <?php tdsHelper::getChecked($row['DinerTheatre']); ?>></td>
+        <td id="DinerTheatre-M" ></td>
+    </tr>
+    <tr>
+        <td>Disc Jockey</td>
+        <td><input class="featureBox" type="checkbox" id="discJockey" <?php tdsHelper::getChecked($row['discJockey']); ?>></td>
+        <td id="discJockey-M" ></td>
+    </tr>
+    <tr>
+        <td>Drive-thru</td>
+        <td><input class="featureBox" type="checkbox" id="driveThru" <?php tdsHelper::getChecked($row['driveThru']); ?>></td>
+        <td id="driveThru-M" ></td>
+    </tr>
+    <tr>
+        <td>Entertainment</td>
+        <td><input class="featureBox" type="checkbox" id="Entertainment" <?php tdsHelper::getChecked($row['Entertainment']); ?>></td>
+        <td id="Entertainment-M" ></td>
+    </tr>
+    <tr>
+        <td>Family Friendly</td>
+        <td><input class="featureBox" type="checkbox" id="FamilyFriendly" <?php tdsHelper::getChecked($row['FamilyFriendly']); ?>></td>
+        <td id="FamilyFriendly-M" ></td>
+    </tr>
+    <tr>
+        <td>Fireplace or Fire pit</td>
+        <td><input class="featureBox" type="checkbox" id="Firepit" <?php tdsHelper::getChecked($row['Firepit']); ?>></td>
+        <td id="Firepit-M" ></td>
+    </tr>
+    <tr>
+        <td>Game Room</td>
+        <td><input class="featureBox" type="checkbox" id="VideoGames" <?php tdsHelper::getChecked($row['VideoGames']); ?>></td>
+        <td id="VideoGames-M" ></td>
+    </tr>
+    <tr>
+        <td>Happy Hour</td>
+        <td><input class="featureBox" type="checkbox" id="HappyHour" <?php tdsHelper::getChecked($row['HappyHour']); ?>></td>
+        <td id="HappyHour-M" ></td>
+    </tr>
+    <tr>
+        <td>Karaoke</td>
+        <td><input class="featureBox" type="checkbox" id="Karaoke" <?php tdsHelper::getChecked($row['Karaoke']); ?>></td>
+        <td id="Karaoke-M" ></td>
+    </tr>
+    <tr>
+        <td>Kids Eat Free</td>
+        <td><input class="featureBox" type="checkbox" id="KidsFree" <?php tdsHelper::getChecked($row['KidsFree']); ?>></td>
+        <td><input type="input" id="KidCount" placeholder="Oldest age kids eat free" value="<?php echo $row['KidCount']; ?>" > years and under</td>
+        <td id="KidsFree-M" ></td>
+    </tr>
+    <tr>
+        <td>Live Music</td>
+        <td><input class="featureBox" type="checkbox" id="LiveMusic" <?php tdsHelper::getChecked($row['LiveMusic']); ?>></td>
+        <td id="LiveMusic-M" ></td>
+    </tr>
+    <tr>
+        <td>Outdoor Dining</td>
+        <td><input class="featureBox" type="checkbox" id="Outdoor" <?php tdsHelper::getChecked($row['Outdoor']); ?>></td>
+        <td id="Outdoor-M" ></td>
+    </tr>
+    <tr>
+        <td>Reservations Accepted</td>
+        <td><input class="featureBox" type="checkbox" id="Reservations" <?php tdsHelper::getChecked($row['Reservations']); ?>></td>
+        <td id="Reservations-M" ></td>
+    </tr>
+    <tr>
+        <td>Shuttle Service</td>
+        <td><input class="featureBox" type="checkbox" id="Shuttle" <?php tdsHelper::getChecked($row['Shuttle']); ?>></td>
+        <td><input type="input" id="Where" placeholder="Where do you shuttle to?" value="<?php echo $row['Where']; ?>" ></td>
+        <td id="Shuttle-M" ></td>
+    </tr>
+    <tr>
+        <td>Special View</td>
+        <td><input class="featureBox" type="checkbox" id="View" <?php tdsHelper::getChecked($row['View']); ?>></td>
+        <td><input type="input" id="What" placeholder="Special view of what?" value="<?php echo $row['What']; ?>" ></td>
+        <td id="View-M" ></td>
+    </tr>
+    <tr>
+        <td>Special Theme</td>
+        <td><input class="featureBox" type="checkbox" id="Theme" <?php tdsHelper::getChecked($row['Theme']); ?>></td>
+        <td><input type="input" id="ThemeName" placeholder="Theme name" value="<?php echo $row['ThemeName']; ?>" ></td>
+        <td id="Theme-M" ></td>
+    </tr>
+    <tr>
+        <td>TVs</td>
+        <td><input class="featureBox" type="checkbox" id="TVBar" <?php tdsHelper::getChecked($row['TVBar']); ?>></td>
+        <td><input type="input" id="TVCount" placeholder="Number of TVs" value="<?php echo $row['TVCount']; ?>" > TVs</td>
+        <td id="TVBar-M" ></td>
+    </tr>
+    <tr>
+        <td>Pet Friendly</td>
+        <td><input class="featureBox" type="checkbox" id="Pets" <?php tdsHelper::getChecked($row['Pets']); ?>></td>
+        <td id="Pets-M" ></td>
+    </tr>
+    <tr>
+        <td>Pool Table</td>
+        <td><input class="featureBox" type="checkbox" id="Pool" <?php tdsHelper::getChecked($row['Pool']); ?>></td>
+        <td><input type="input" id="PoolCount" placeholder="Number of Pool Tables" value="<?php echo $row['PoolCount']; ?>" > tables</td>
+        <td id="Pool-M" ></td>
+    </tr>
+    <tr>
+        <td>Private Rooms</td>
+        <td><input class="featureBox" type="checkbox" id="PrivateRooms" <?php tdsHelper::getChecked($row['PrivateRooms']); ?>></td>
+        <td id="PrivateRooms-M" ></td>
+    </tr>
+    <tr>
+        <td>Valet Parking</td>
+        <td><input class="featureBox" type="checkbox" id="Valet" <?php tdsHelper::getChecked($row['Valet']); ?>></td>
+        <td id="Valet-M" ></td>
+    </tr>
+    <tr>
+        <td>Waterfront</td>
+        <td><input class="featureBox" type="checkbox" id="Waterfront" <?php tdsHelper::getChecked($row['Waterfront']); ?>></td>
+        <td id="Waterfront-M" ></td>
+    </tr>
+    <tr>
+        <td>WiFi (Free)</td>
+        <td><input class="featureBox" type="checkbox" id="Wifi" <?php tdsHelper::getChecked($row['Wifi']); ?>></td>
+        <td id="Wifi-M" ></td>
+    </tr>
+</table>
+<div style="clear:both;"></div>
