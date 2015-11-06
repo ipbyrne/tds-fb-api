@@ -213,6 +213,9 @@ else
 </ol><br>
 <button id="fbLogin">Link/Relink Facebook</button>
 <button id="fbReviews" onclick="SendToFacebook()">Publish Reviews</button>
+<ul id="list">
+
+</ul>
 <script type="text/javascript">
 	window.fbAsyncInit = function() {
 		FB.init({
@@ -241,6 +244,14 @@ else
 														var reviewRating = arguments[0].data[i].rating;
 														var reviewText = arguments[0].data[i].review_text;
 														// Make AJAX Call to insert each review item into the database.
+													
+														// Post Reviews to List
+														var listItem = document.createElement("li");
+														var listItemContent = document.createTextNode("Rating: "+ arguments[0].data[i].rating +"/5 " + "-- Review: " + arguments[0].data[i].review_text);
+														listItem.appendChild(listItemContent);
+
+														var element = document.getElementById("list");
+														element.appendChild(listItem);
 												};
 									});
 								// END OF PULLING PAGE REVIEW CODES!!!
